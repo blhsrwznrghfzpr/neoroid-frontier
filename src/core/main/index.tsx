@@ -1,5 +1,5 @@
-import { SampleSwitcher } from "./sampleSwitcher";
+import { Main } from "./honeycomb-sample";
 
 export const App = () => {
-  return <SampleSwitcher />;
+  return <Main />;
 };
