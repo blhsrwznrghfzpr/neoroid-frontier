@@ -1,4 +1,6 @@
-export type Cell = BlankCell | StarshipCell | TreeCell | StoneCell;
+import { Hex } from "honeycomb-grid";
+
+export type CellState = BlankCell | StarshipCell | TreeCell | StoneCell;
 
 export type BlankCell = {
   type: "blank";
@@ -15,3 +17,7 @@ export type TreeCell = {
 export type StoneCell = {
   type: "stone";
 };
+
+export class Cell extends Hex {
+  cellState: CellState = { type: "blank" };
+}

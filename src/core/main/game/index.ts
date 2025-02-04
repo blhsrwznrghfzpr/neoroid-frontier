@@ -15,13 +15,14 @@ export class Game {
 
   addPlayer(playerId: string) {
     if (this.gameState.players.some((player) => player.id === playerId)) {
-      const player = {
-        id: playerId,
-        name: "Player",
-        workers: [],
-      };
-      this.gameState.players.push(player);
+      return;
     }
+    const player = {
+      id: playerId,
+      name: "Player",
+      workers: [],
+    };
+    this.gameState.players.push(player);
   }
 
   removePlayer(playerId: string) {
@@ -31,7 +32,7 @@ export class Game {
   }
 
   startGame() {
-    if (this.gameState.mode !== "lobby" && this.gameState.players.length < 1) {
+    if (this.gameState.mode !== "lobby" || this.gameState.players.length < 1) {
       return;
     }
 
@@ -41,7 +42,7 @@ export class Game {
       mode: "inGame",
       players: this.gameState.players,
       workers: Array.from({ length: 10 }).map(() => new Workeroid(baseHex)),
-      map: new StageMap({ width: 10, height: 10 }),
+      map: new StageMap({ radius: 10 }),
     };
   }
 }

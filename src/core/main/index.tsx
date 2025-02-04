@@ -1,4 +1,4 @@
-import { Main } from "./honeycomb-sample";
+import { Main } from "./render";
 
 export const App = () => {
   return <Main />;

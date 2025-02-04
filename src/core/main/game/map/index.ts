@@ -1,9 +1,14 @@
-import { Grid, Hex, rectangle } from "honeycomb-grid";
+import { Grid, spiral } from "honeycomb-grid";
+import { Cell } from "./cell";
 
 export class StageMap {
-  grid: Grid<Hex>;
+  grid: Grid<Cell>;
 
-  constructor({ width, height }: { width: number; height: number }) {
-    this.grid = new Grid(Hex, rectangle({ width, height }));
+  constructor({ radius }: { radius: number }) {
+    this.grid = new Grid(Cell, spiral({ radius: radius }));
+  }
+
+  getHexArray() {
+    return this.grid.toArray();
   }
 }
