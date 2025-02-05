@@ -5,18 +5,18 @@ import { StageMap } from "./map";
 import { Cell } from "./map/cell";
 
 export class Game {
-  gameState: GameState;
+  state: GameState;
 
   constructor() {
     console.debug("Game created");
-    this.gameState = {
+    this.state = {
       mode: "lobby",
       players: [],
     };
   }
 
   addPlayer(playerId: string) {
-    if (this.gameState.players.some((player) => player.id === playerId)) {
+    if (this.state.players.some((player) => player.id === playerId)) {
       return;
     }
     const player = {
@@ -24,25 +24,25 @@ export class Game {
       name: "Player",
       workers: [],
     };
-    this.gameState.players.push(player);
+    this.state.players.push(player);
   }
 
   removePlayer(playerId: string) {
-    this.gameState.players = this.gameState.players.filter(
+    this.state.players = this.state.players.filter(
       (player) => player.id !== playerId,
     );
   }
 
   startGame() {
-    if (this.gameState.mode !== "lobby" || this.gameState.players.length < 1) {
+    if (this.state.mode !== "lobby" || this.state.players.length < 1) {
       return;
     }
 
     const baseCell = new Cell([0, 0]);
 
-    this.gameState = {
+    this.state = {
       mode: "inGame",
-      players: this.gameState.players,
+      players: this.state.players,
       workers: Array.from({ length: 10 }).map(() => new Workeroid(baseCell)),
       map: new StageMap({ radius: 10 }),
     };
@@ -51,26 +51,26 @@ export class Game {
   }
 
   resetGame() {
-    this.gameState = {
+    this.state = {
       mode: "lobby",
       players: [],
     };
   }
 
   moveWorker(workerId: number, dst: HexCoordinates) {
-    if (this.gameState.mode !== "inGame") {
+    if (this.state.mode !== "inGame") {
       return;
     }
 
-    const worker = this.gameState.workers[workerId];
-    const dstCell = this.gameState.map.grid.getHex(dst);
+    const worker = this.state.workers[workerId];
+    const dstCell = this.state.map.grid.getHex(dst);
 
     if (!worker || !dstCell) {
       return;
     }
 
     const currentCell = worker.status.currentCell;
-    const traverser = this.gameState.map.grid.traverse(
+    const traverser = this.state.map.grid.traverse(
       line({ start: currentCell, stop: dstCell }),
     );
 

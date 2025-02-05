@@ -71,7 +71,7 @@ export const Main = () => {
           </VerticalLayout>
         </Canvas>
       </Slot>
-      <SceneRender gameState={gameRef.current.gameState} />
+      <SceneRender gameState={gameRef.current.state} />
     </StyledDVSpace>
   );
 };

@@ -1,5 +1,5 @@
 import { Slot, Box } from "../../../unit/package/Primitive/main";
-import { WorkerStatus } from "../../game/workeroid";
+import { WorkerStatus } from "../../game/type/workerState";
 
 export const WorkerRender = ({
   workerStatus,
