@@ -20,4 +20,12 @@ export type StoneCell = {
 
 export class Cell extends Hex {
   cellState: CellState = { type: "blank" };
+
+  get tuple() {
+    return [this.q, this.r] as [number, number];
+  }
+
+  get point() {
+    return [this.x, 0, this.y] as [number, number, number];
+  }
 }

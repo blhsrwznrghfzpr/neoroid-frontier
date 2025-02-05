@@ -1,24 +1,29 @@
-import { Hex, hexToPoint } from "honeycomb-grid";
 import { Slot, Box } from "../../../unit/package/Primitive/main";
 import { GameStateInGame } from "../../game/type";
-
-const hexToPosition = (hex: Hex): [number, number, number] => {
-  const { x, y } = hexToPoint(hex);
-  return [x, 0, y];
-};
+import { WorkerRender } from "../worker";
+import { Cell } from "../../game/map/cell";
 
 export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
   return (
     <Slot>
-      {gameState.map.getHexArray().map((hex: Hex, index: number) => (
-        <Slot
-          key={index}
-          position={hexToPosition(hex)}
-          name={`hex-${index}-[${hex.q},${hex.r}]`}
-        >
-          <Box />
-        </Slot>
-      ))}
+      {/* map */}
+      <Slot>
+        {gameState.map.getHexArray().map((cell: Cell, index: number) => (
+          <Slot
+            key={index}
+            name={`hex-${index}-[${cell.q},${cell.r}]`}
+            position={cell.point}
+          >
+            <Box />
+          </Slot>
+        ))}
+      </Slot>
+      {/* workers */}
+      <Slot>
+        {gameState.workers.map((worker, index) => (
+          <WorkerRender key={index} workerStatus={worker.status} />
+        ))}
+      </Slot>
     </Slot>
   );
 };

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Slot } from "../../unit/package/Primitive/main";
 import { Game } from "../game";
 import { FunctionEnv } from "../../../lib/miragex/common/interactionEvent";
@@ -8,28 +8,48 @@ import { StyledButton, StyledText } from "../../unit/package/StyledUix/main";
 import { SceneRender } from "./scene";
 
 export const Main = () => {
-  const [, _setTime] = useState(0);
+  // eslint-disable-next-line react/hook-use-state
+  const [, setTime] = useState(0);
   const effect = useCallback(() => {
-    _setTime(performance.now());
-    console.debug(gameRef.current.gameState);
+    setTime(performance.now());
   }, []);
 
-  const gameRef = useRef<Game>(new Game());
+  const gameRef = useRef<Game | null>(null);
+  // const prevTimeRef = useRef<number>(performance.now());
+  useEffect(() => {
+    gameRef.current = new Game();
+    const interval = setInterval(() => {
+      // const deltaTime = performance.now() - prevTimeRef.current;
+      // prevTimeRef.current = performance.now();
+      // gameRef.current?.updateGame(deltaTime / 1000);
+      effect();
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
 
   const joinPlayer = useCallback((env: FunctionEnv) => {
-    gameRef.current.addPlayer(env.userId);
+    gameRef.current?.addPlayer(env.userId);
     effect();
   }, []);
 
   const leavePlayer = useCallback((env: FunctionEnv) => {
-    gameRef.current.removePlayer(env.userId);
+    gameRef.current?.removePlayer(env.userId);
     effect();
   }, []);
 
   const startGame = useCallback(() => {
-    gameRef.current.startGame();
+    gameRef.current?.startGame();
     effect();
   }, []);
+
+  const resetGame = useCallback(() => {
+    gameRef.current?.resetGame();
+    effect();
+  }, []);
+
+  if (!gameRef.current) {
+    return <></>;
+  }
 
   return (
     <StyledDVSpace>
@@ -44,6 +64,9 @@ export const Main = () => {
             </StyledButton>
             <StyledButton onClick={startGame}>
               <StyledText content="Start" />
+            </StyledButton>
+            <StyledButton onClick={resetGame}>
+              <StyledText content="Reset" />
             </StyledButton>
           </VerticalLayout>
         </Canvas>
