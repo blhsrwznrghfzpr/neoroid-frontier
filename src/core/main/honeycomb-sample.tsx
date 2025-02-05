@@ -7,7 +7,6 @@ import {
   ring,
   rectangle,
   HexCoordinates,
-  //distance,
   Traverser 
 } from "honeycomb-grid";
 import { Slot, Cylinder } from "../unit/package/Primitive/main";
@@ -49,13 +48,14 @@ function aStarSearch(grid: Grid<CustomHex>, start: HexCoordinates, goal: HexCoor
         current = cameFrom.get(current)!;
         path.unshift(current);
       }
+      console.log(path);
       return path;
     }
 
     openSet.delete(current);
 
-    const ringRet = grid.traverse(ring<CustomHex>({ center: [current.q, current.r], radius: 1 }));
-    for (const neighbor of ringRet) {
+    const neighborGrids = grid.traverse(ring<CustomHex>({ center: [current.q, current.r], radius: 1 }));
+    for (const neighbor of neighborGrids) {
       if (neighbor.isBlocked) continue;
 
       const tentativeGScore = (gScore.get(current) ?? Infinity) + 1;
@@ -71,9 +71,9 @@ function aStarSearch(grid: Grid<CustomHex>, start: HexCoordinates, goal: HexCoor
       }
     }
   }
-
-  return [];
+  return [startHex];
 }
+
 function getBlockedHexes(grid: Iterable<CustomHex>): CustomHex[] {
   return [...grid].filter(hex => hex.isBlocked);
 }
@@ -87,14 +87,14 @@ interface customLineOptions {
 
 function customLine<T extends CustomHex>(options: customLineOptions): Traverser<T> {
   return function customLineTraverser(createHex) {
-    // const lineBetween = line<CustomHex>({ start: options.start, stop: options.stop });
-    // const result = grid.traverse(lineBetween);
-    // const blockedHexes = getBlockedHexes(result);
-    // if(blockedHexes.length == 0) {
-    //   return lineBetween(createHex)
-    // }
-    const paths = aStarSearch(options.grid,options.start,options.stop)
-    const coordinates = paths.map((hex) => [hex.q, hex.r] as [number, number]); 
+    const lineBetween = line<CustomHex>({ start: options.start, stop: options.stop });
+    const result = options.grid.traverse(lineBetween);
+    const blockedHexes = getBlockedHexes(result);
+    if(blockedHexes.length == 0) {
+      return lineBetween(createHex) as T[];
+    }
+    const pathList = aStarSearch(options.grid,options.start,options.stop)
+    const coordinates = pathList.map((hex) => [hex.q, hex.r] as [number, number]); 
     const lineAStar = fromCoordinates<T>(...coordinates)
 
     return lineAStar(createHex);
@@ -104,9 +104,15 @@ function customLine<T extends CustomHex>(options: customLineOptions): Traverser<
 const grid = new Grid(CustomHex, rectangle({ width: 10, height: 10 }));
 
 const blockedCoords: [number, number][] = [
+  [0, 1],
   [1, 1],
   [1, 2],
-  [2, 2]
+  [2, 2],
+  [3, 2],
+  [4, 2],
+  [5, 2],
+  [6, 2],
+  [8, 2]
 ];
 
 blockedCoords.forEach(([q, r]) => {
@@ -118,8 +124,6 @@ blockedCoords.forEach(([q, r]) => {
 
 const lineBetween = customLine({ start: [2, 0], stop: [1, 4],grid: grid });
 const res = grid.traverse(lineBetween);
-
-
 
 const hexArray2 = res.toArray();
 let counter = 0.3;

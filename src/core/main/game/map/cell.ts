@@ -20,7 +20,8 @@ export type StoneCell = {
 
 export class Cell extends Hex {
   cellState: CellState = { type: "blank" };
-
+  isBlocked: boolean = false;
+  
   get tuple() {
     return [this.q, this.r] as [number, number];
   }
