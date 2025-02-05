@@ -1,7 +1,9 @@
-import { Slot, Box } from "../../../unit/package/Primitive/main";
+import { Slot } from "../../../unit/package/Primitive/main";
 import { GameStateInGame } from "../../game/type";
 import { WorkerRender } from "../worker";
 import { Cell } from "../../game/map/cell";
+import { MeshRenderer } from "../../../unit/package/StyledObject/main";
+import { Mesh } from "../style";
 
 export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
   return (
@@ -14,7 +16,7 @@ export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
             name={`hex-${index}-[${cell.q},${cell.r}]`}
             position={cell.point}
           >
-            <Box />
+            <MeshRenderer styledMesh={Mesh.hex} />
           </Slot>
         ))}
       </Slot>

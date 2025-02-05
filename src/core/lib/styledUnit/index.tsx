@@ -1,7 +1,9 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
+  StyledDVBoxMesh,
   StyledDVColor,
+  StyledDVCylinderMesh,
   StyledDVFont,
   StyledDVSpace,
   StyledDVSprite,
@@ -62,6 +64,22 @@ type StyledFontConfig = {
     string?,
   ];
 };
+
+type StyledBoxMeshConfig = {
+  type: "BoxMesh";
+  size?: [number, number, number];
+};
+
+type StyledCylinderMeshConfig = {
+  type: "CylinderMesh";
+  height?: number;
+  radius?: number;
+  sides?: number;
+  caps?: boolean;
+  flatShading?: boolean;
+};
+
+type StyledMeshConfig = StyledBoxMeshConfig | StyledCylinderMeshConfig;
 
 // type StyledConfig = StyledColorConfig | StyledSpriteConfig;
 
@@ -142,6 +160,28 @@ export const createFont = ({
   urls,
 });
 
+export const createBoxMesh = ({
+  size,
+}: Omit<StyledBoxMeshConfig, "type">): StyledBoxMeshConfig => ({
+  type: "BoxMesh",
+  size,
+});
+
+export const createCylinderMesh = ({
+  height,
+  radius,
+  sides,
+  caps,
+  flatShading,
+}: Omit<StyledCylinderMeshConfig, "type">): StyledCylinderMeshConfig => ({
+  type: "CylinderMesh",
+  height,
+  radius,
+  sides,
+  caps,
+  flatShading,
+});
+
 export type StyledColorVariable = {
   type: "Color";
   variableName: string;
@@ -162,22 +202,30 @@ export type StyledFontVariable = {
   variableName: string;
 };
 
+export type StyledMeshVariable = {
+  type: "BoxMesh" | "CylinderMesh";
+  variableName: string;
+};
+
 export type StyledVariable =
   | StyledColorVariable
   | StyledSpriteVariable
   | StyledMaterialVariable
-  | StyledFontVariable;
+  | StyledFontVariable
+  | StyledMeshVariable;
 
 export const createStyle = <
   C extends { [key: string]: StyledColorConfig },
   S extends { [key: string]: StyledSpriteConfig },
   M extends { [key: string]: StyledMaterial },
   F extends { [key: string]: StyledFontConfig },
+  Mh extends { [key: string]: StyledMeshConfig },
 >(config: {
   Color?: C;
   Sprite?: S;
   Material?: M;
   Font?: F;
+  Mesh?: Mh;
 }): {
   StyledSpace: React.FC<{ children: React.ReactNode }>;
   Color: {
@@ -191,6 +239,9 @@ export const createStyle = <
   };
   Font: {
     [key in keyof F]: StyledFontVariable;
+  };
+  Mesh: {
+    [key in keyof Mh]: StyledMeshVariable;
   };
 } => {
   const spaceName = createId();
@@ -237,6 +288,17 @@ export const createStyle = <
       ...(config.Font?.[key] ?? {
         type: "Font",
         urls: ["", "", "", "", "", "", "", "", "", ""],
+      }),
+      variableName: `${spaceName}/${createId()}`,
+      key,
+    }),
+  );
+
+  const meshVariables = Object.keys(config.Mesh ?? []).map(
+    (key): { key: keyof Mh; variableName: string } & StyledMeshConfig => ({
+      ...(config.Mesh?.[key] ?? {
+        type: "BoxMesh",
+        size: [1, 1, 1],
       }),
       variableName: `${spaceName}/${createId()}`,
       key,
@@ -308,6 +370,30 @@ export const createStyle = <
             url9={variable.urls[9]}
           />
         ))}
+        {meshVariables.map((variable) => {
+          switch (variable.type) {
+            case "BoxMesh":
+              return (
+                <StyledDVBoxMesh
+                  key={variable.variableName}
+                  name={variable.variableName}
+                  size={variable.size}
+                />
+              );
+            case "CylinderMesh":
+              return (
+                <StyledDVCylinderMesh
+                  caps={variable.caps}
+                  flatShading={variable.flatShading}
+                  height={variable.height}
+                  key={variable.variableName}
+                  name={variable.variableName}
+                  radius={variable.radius}
+                  sides={variable.sides}
+                />
+              );
+          }
+        })}
         {children}
       </StyledDVSpace>
     ),
@@ -357,6 +443,18 @@ export const createStyle = <
       ),
       {} as {
         [key in keyof F]: StyledFontVariable;
+      },
+    ),
+    Mesh: meshVariables.reduce(
+      (acc, variable) => (
+        (acc[variable.key] = {
+          type: variable.type,
+          variableName: variable.variableName,
+        }),
+        acc
+      ),
+      {} as {
+        [key in keyof Mh]: StyledMeshVariable;
       },
     ),
   };

@@ -1,4 +1,6 @@
+export { O as StyledDVBoxMesh } from "./StyledDVBoxMesh/main";
 export { O as StyledDVColor } from "./StyledDVColor/main";
+export { O as StyledDVCylinderMesh } from "./StyledDVCylinderMesh/main";
 export { O as StyledDVFont } from "./StyledDVFont/main";
 export { O as StyledDVSpace } from "./StyledDVSpace/main";
 export { O as StyledDVSprite } from "./StyledDVSprite/main";

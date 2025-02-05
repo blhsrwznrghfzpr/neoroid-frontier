@@ -2,10 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Slot } from "../../unit/package/Primitive/main";
 import { Game } from "../game";
 import { FunctionEnv } from "../../../lib/miragex/common/interactionEvent";
-import { StyledDVSpace } from "../../unit/package/StyledUnit/main";
 import { Canvas, VerticalLayout } from "../../unit/package/PrimitiveUix/main";
 import { StyledButton, StyledText } from "../../unit/package/StyledUix/main";
 import { SceneRender } from "./scene";
+import { StyledSpace } from "./style";
 
 export const Main = () => {
   // eslint-disable-next-line react/hook-use-state
@@ -52,7 +52,7 @@ export const Main = () => {
   }
 
   return (
-    <StyledDVSpace>
+    <StyledSpace>
       <Slot position={[0, 1, 0]}>
         <Canvas>
           <VerticalLayout>
@@ -72,6 +72,6 @@ export const Main = () => {
         </Canvas>
       </Slot>
       <SceneRender gameState={gameRef.current.state} />
-    </StyledDVSpace>
+    </StyledSpace>
   );
 };
