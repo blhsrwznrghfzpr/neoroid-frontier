@@ -1,4 +1,5 @@
 import { Hex } from "honeycomb-grid";
+import { StoneBlock, WoodBlock } from "../type/craft";
 
 export type CellState = BlankCell | StarshipCell | TreeCell | StoneCell;
 
@@ -12,16 +13,18 @@ export type StarshipCell = {
 
 export type TreeCell = {
   type: "tree";
+  blocks: WoodBlock[];
 };
 
 export type StoneCell = {
   type: "stone";
+  blocks: StoneBlock[];
 };
 
 export class Cell extends Hex {
   cellState: CellState = { type: "blank" };
   isBlocked: boolean = false;
-  
+
   get tuple() {
     return [this.q, this.r] as [number, number];
   }

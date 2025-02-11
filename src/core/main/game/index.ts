@@ -3,6 +3,7 @@ import { GameState } from "./type";
 import { Workeroid } from "./workeroid";
 import { StageMap } from "./map";
 import { Cell } from "./map/cell";
+import { WoodBlock } from "./type/craft";
 
 export class Game {
   state: GameState;
@@ -48,9 +49,16 @@ export class Game {
       workers: Array.from({ length: 10 }).map(() => new Workeroid(baseCell)),
       map: new StageMap({ radius: 10 }),
     };
+    const treeCell = this.state.map.grid.getHex([5, 3]);
+    if (!treeCell) {
+      return;
+    }
 
-    this.moveWorker(0, [5, 3]);
-    
+    treeCell.cellState = {
+      type: "tree",
+      blocks: [WoodBlock, WoodBlock],
+    };
+    this.moveWorker(0, treeCell);
   }
 
   resetGame() {

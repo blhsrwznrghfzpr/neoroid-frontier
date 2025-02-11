@@ -3,10 +3,8 @@ import { Slot } from "../../../unit/package/Primitive/main";
 import { GameStateInGame } from "../../game/type";
 import { WorkerRender } from "../worker";
 import { Cell } from "../../game/map/cell";
-import { MeshRenderer } from "../../../unit/package/StyledObject/main";
+import { CellRender } from "./cell";
 import { Mesh } from "../style";
-import { Canvas } from "../../../unit/package/PrimitiveUix/main"; 
-import { StyledText } from "../../../unit/package/StyledUix/main"; 
 import { GetUserPosition } from "../../../unit/package/GameEvent/main";
 import { FunctionEnv } from "../../../../lib/miragex/common/interactionEvent";
 import { posText2Num} from "../../game/utils";
@@ -63,20 +61,7 @@ export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
       {/* map */}
       <Slot>
         {gameState.map.getHexArray().map((cell: Cell, index: number) => (
-          <Slot
-            key={index}
-            name={`hex-${index}-[${cell.q},${cell.r}]`}
-            position={cell.point}
-          >
-            <MeshRenderer styledMesh={Mesh.hex} >
-              <Canvas position={[0, -0.3, 0]}>
-                <StyledText
-                  content={`${cell.q},${cell.r}`}
-                  defaultColor = {cell.isBlocked ? [1, 0, 0, 1] : [0, 0, 0, 1]}
-                />
-              </Canvas>
-            </MeshRenderer>
-          </Slot>
+          <CellRender cell={cell} key={index} />
         ))}
       </Slot>
       {/* workers */}
