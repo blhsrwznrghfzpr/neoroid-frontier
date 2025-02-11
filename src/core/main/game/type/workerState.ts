@@ -1,6 +1,6 @@
 import { Cell } from "../map/cell";
 
-export type WorkerStatus = WorkerIdle | WorkerMoving;
+export type WorkerStatus = WorkerIdle | WorkerMoving | WorkerFollowing;
 
 type WorkerIdle = {
   type: "idle";
@@ -12,3 +12,9 @@ type WorkerMoving = {
   currentCell: Cell;
   traverser: Cell[];
 };
+
+interface WorkerFollowing {
+  type: "following";
+  currentCell: Cell;
+  targetUserId: string;
+}

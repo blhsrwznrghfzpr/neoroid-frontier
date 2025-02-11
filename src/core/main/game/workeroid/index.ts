@@ -34,4 +34,12 @@ export class Workeroid {
       this.status.currentCell = nextCell;
     }, 1000);
   }
+
+  follow(targetUserId: string) {
+    this.status = {
+      type: "following",
+      currentCell: this.status.currentCell,
+      targetUserId,
+    };
+  }
 }

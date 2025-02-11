@@ -24,8 +24,10 @@ export class Game {
       id: playerId,
       name: "Player",
       workers: [],
+      currentCell: new Cell([0, 0]),
     };
     this.state.players.push(player);
+    console.log("Player added", playerId);
   }
 
   removePlayer(playerId: string) {
@@ -47,7 +49,6 @@ export class Game {
       workers: Array.from({ length: 10 }).map(() => new Workeroid(baseCell)),
       map: new StageMap({ radius: 10 }),
     };
-
     const treeCell = this.state.map.grid.getHex([5, 3]);
     if (!treeCell) {
       return;
@@ -65,6 +66,16 @@ export class Game {
       mode: "lobby",
       players: [],
     };
+  }
+
+  followerAllWorkers(targetUserId: string) {
+    if (this.state.mode !== "inGame") {
+      return;
+    }
+    this.state.workers.forEach((worker) => {
+      worker.follow(targetUserId);
+    });
+    //console.log("All Workeroid follow:", targetUserId);
   }
 
   moveWorker(workerId: number, dst: HexCoordinates) {
@@ -85,5 +96,19 @@ export class Game {
     );
 
     worker.move(traverser.toArray());
+  }
+
+  followWorker(workerId: number, targetUserId: string) {
+    if (this.state.mode !== "inGame") {
+      return;
+    }
+
+    const worker = this.state.workers[workerId];
+    if (!worker) {
+      return;
+    }
+  
+    worker.follow(targetUserId);
+    console.log("Workeroid follow:", targetUserId);
   }
 }
