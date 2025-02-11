@@ -51,10 +51,6 @@ export class Game {
 
     this.moveWorker(0, [5, 3]);
     
-    setTimeout(() => {
-      const targetUserId = this.state.players[0]?.id || "U-ankou";
-      this.followWorker(0, targetUserId);
-    }, 30000);
   }
 
   resetGame() {
@@ -62,6 +58,16 @@ export class Game {
       mode: "lobby",
       players: [],
     };
+  }
+
+  followerAllWorkers(targetUserId: string) {
+    if (this.state.mode !== "inGame") {
+      return;
+    }
+    this.state.workers.forEach((worker) => {
+      worker.follow(targetUserId);
+    });
+    console.log("All Workeroid follow:", targetUserId);
   }
 
   moveWorker(workerId: number, dst: HexCoordinates) {

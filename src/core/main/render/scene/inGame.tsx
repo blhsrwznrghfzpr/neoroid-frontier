@@ -1,4 +1,4 @@
-import { useEffect,useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Slot } from "../../../unit/package/Primitive/main";
 import { GameStateInGame } from "../../game/type";
 import { WorkerRender } from "../worker";
@@ -9,43 +9,25 @@ import { Canvas } from "../../../unit/package/PrimitiveUix/main";
 import { StyledText } from "../../../unit/package/StyledUix/main"; 
 import { GetUserPosition } from "../../../unit/package/GameEvent/main";
 import { FunctionEnv } from "../../../../lib/miragex/common/interactionEvent";
+import { posText2Num} from "../../game/utils";
 
 export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
-  const [posText, setPosText] = useState("");
-  useEffect(() => {
-    handlePos2Hex();
-  }, [posText]);
+  const [posText, setPosText] = useState<{ [key: string]: string }>({});
 
   const posTextOnChange = useCallback(
-    (_env: FunctionEnv, text: string) => {
-      setPosText(text);
+    (_env: FunctionEnv, text: string, userId: string) => {
+      setPosText((prev) => ({
+        ...prev,
+        [userId]: text,
+      }));
+      updateUserCell(text, userId);
     },
-    [setPosText]
+    [posText]
   );
 
-  const parsePosText = (posText: string): { x: number; z: number } | null => {
-    const values = posText
-      .replace(/[;[\]]/g, "") 
-      .split(" ")
-      .map(Number);
-
-    console.log("values:",values);
-    if (values.length !== 3 || values.some(isNaN)) {
-      console.error("Invalid posText format");
-      return null;
-    }
-
-    const [x, , z] = values;
-    if (x === undefined || z === undefined) {
-      console.error("Invalid posText format: x or z is undefined");
-      return null;
-    }
-
-    return { x, z };
-  };
-
-  const handlePos2Hex = () => {
-    const parsed = parsePosText(posText);
+  // ユーザとその下のワーカーのCellを更新(後でgame側に映したい)
+  const updateUserCell = (posText: string, playerId: string) => {
+    const parsed = posText2Num(posText);
     if (parsed) {
       if (gameState.mode === "inGame") {
         const hex = gameState.map.grid.pointToHex(
@@ -53,14 +35,18 @@ export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
           { allowOutside: false }
         );
         if (hex) {
-          gameState.players.forEach((player) => {
-          player.currentCell = hex;
-          console.log(player);
-        });
+          const player = gameState.players.find((p) => p.id === playerId);
+          if (player) {
+            player.currentCell = hex;
+            console.log(player);
+            gameState.workers.forEach((worker) => {
+                worker.status.currentCell = hex;
+                console.log(worker);
+            });
+          }
         } else {
           console.error("Hex is undefined");
         }
-        
       }
     }
   };
@@ -70,7 +56,7 @@ export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
       {gameState.players.map((player, index) => (
         <GetUserPosition
           key={index}
-          onChange={posTextOnChange}
+          onChange={(env, text) => posTextOnChange(env, text, player.id)}
           userId={player.id}
         />
       ))}

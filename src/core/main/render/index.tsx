@@ -47,6 +47,12 @@ export const Main = () => {
     effect();
   }, []);
 
+  // ワーカーを全員フォローする(テスト用)
+  const followeWorkers = useCallback((env: FunctionEnv) => {
+    gameRef.current?.followerAllWorkers(env.userId);
+    effect();
+  }, []);
+
   if (!gameRef.current) {
     return <></>;
   }
@@ -67,6 +73,9 @@ export const Main = () => {
             </StyledButton>
             <StyledButton onClick={resetGame}>
               <StyledText content="Reset" />
+            </StyledButton>
+            <StyledButton onClick={followeWorkers}>
+              <StyledText content="followeWorkers" />
             </StyledButton>
           </VerticalLayout>
         </Canvas>
