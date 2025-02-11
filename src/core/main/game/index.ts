@@ -23,8 +23,10 @@ export class Game {
       id: playerId,
       name: "Player",
       workers: [],
+      currentCell: new Cell([0, 0]),
     };
     this.state.players.push(player);
+    console.log("Player added", playerId);
   }
 
   removePlayer(playerId: string) {
@@ -48,6 +50,11 @@ export class Game {
     };
 
     this.moveWorker(0, [5, 3]);
+    
+    setTimeout(() => {
+      const targetUserId = this.state.players[0]?.id || "U-ankou";
+      this.followWorker(0, targetUserId);
+    }, 30000);
   }
 
   resetGame() {
@@ -75,5 +82,19 @@ export class Game {
     );
 
     worker.move(traverser.toArray());
+  }
+
+  followWorker(workerId: number, targetUserId: string) {
+    if (this.state.mode !== "inGame") {
+      return;
+    }
+
+    const worker = this.state.workers[workerId];
+    if (!worker) {
+      return;
+    }
+  
+    worker.follow(targetUserId);
+    console.log("Workeroid follow:", targetUserId);
   }
 }
