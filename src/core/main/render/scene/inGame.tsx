@@ -2,8 +2,7 @@ import { Slot } from "../../../unit/package/Primitive/main";
 import { GameStateInGame } from "../../game/type";
 import { WorkerRender } from "../worker";
 import { Cell } from "../../game/map/cell";
-import { MeshRenderer } from "../../../unit/package/StyledObject/main";
-import { Mesh } from "../style";
+import { CellRender } from "./cell";
 
 export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
   return (
@@ -11,13 +10,7 @@ export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
       {/* map */}
       <Slot>
         {gameState.map.getHexArray().map((cell: Cell, index: number) => (
-          <Slot
-            key={index}
-            name={`hex-${index}-[${cell.q},${cell.r}]`}
-            position={cell.point}
-          >
-            <MeshRenderer styledMesh={Mesh.hex} />
-          </Slot>
+          <CellRender cell={cell} key={index} />
         ))}
       </Slot>
       {/* workers */}

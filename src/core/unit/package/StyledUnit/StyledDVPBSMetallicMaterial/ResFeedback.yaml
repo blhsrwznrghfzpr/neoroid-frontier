@@ -1,0 +1,535 @@
+Name:
+  ID: "?"
+  Data: StyledUnit/StyledDVPBSMetallicMaterial
+Active:
+  ID: "?"
+  Data: true
+ID: "?"
+Persistent-ID: "?"
+Position:
+  ID: "?"
+  Data:
+    - 0
+    - 0
+    - 0
+Rotation:
+  ID: "?"
+  Data:
+    - 0
+    - 0
+    - 0
+    - 1
+Scale:
+  ID: "?"
+  Data:
+    - 1
+    - 1
+    - 1
+Tag:
+  ID: "?"
+  Data: null
+OrderOffset:
+  ID: "?"
+  Data: 0
+Components:
+  ID: "?"
+  Data:
+    - Type: 0
+      Data:
+        ID: "?"
+        persistent-ID: "?"
+        UpdateOrder:
+          ID: "?"
+          Data: 0
+        Enabled:
+          ID: "?"
+          Data: true
+        SpaceName:
+          ID: "?"
+          Data: null
+        OnlyDirectBinding:
+          ID: "?"
+          Data: false
+Children:
+  - Name:
+      ID: "?"
+      Data: DV
+    Active:
+      ID: "?"
+      Data: true
+    ID: "?"
+    Persistent-ID: "?"
+    Position:
+      ID: "?"
+      Data:
+        - 0
+        - 0
+        - 0
+    Rotation:
+      ID: "?"
+      Data:
+        - 0
+        - 0
+        - 0
+        - 111111
+    Scale:
+      ID: "?"
+      Data:
+        - 111111
+        - 111111
+        - 111111
+    Tag:
+      ID: "?"
+      Data: null
+    OrderOffset:
+      ID: "?"
+      Data: 0
+    Components:
+      ID: "?"
+      Data:
+        - Type: 1
+          Data:
+            ID: "?"
+            persistent-ID: "?"
+            UpdateOrder:
+              ID: "?"
+              Data: 0
+            Enabled:
+              ID: "?"
+              Data: true
+            VariableName:
+              ID: "?"
+              Data: Static.Ref
+            Reference:
+              ID: "?"
+              Data: ID:Ref:0
+            OverrideOnLink:
+              ID: "?"
+              Data: false
+    Children: []
+    ParentReference: ""
+  - Name:
+      ID: "?"
+      Data: Ref
+    Active:
+      ID: "?"
+      Data: true
+    ID: ID:Ref:0
+    Persistent-ID: "?"
+    Position:
+      ID: "?"
+      Data:
+        - 0
+        - 0
+        - 0
+    Rotation:
+      ID: "?"
+      Data:
+        - 0
+        - 0
+        - 0
+        - 111111
+    Scale:
+      ID: "?"
+      Data:
+        - 111111
+        - 111111
+        - 111111
+    Tag:
+      ID: "?"
+      Data: null
+    OrderOffset:
+      ID: "?"
+      Data: 0
+    Components:
+      ID: "?"
+      Data:
+        - Type: 0
+          Data:
+            ID: "?"
+            persistent-ID: "?"
+            UpdateOrder:
+              ID: "?"
+              Data: 0
+            Enabled:
+              ID: "?"
+              Data: true
+            SpaceName:
+              ID: "?"
+              Data: null
+            OnlyDirectBinding:
+              ID: "?"
+              Data: false
+    Children:
+      - Name:
+          ID: "?"
+          Data: StyledDVPBSMetallicMaterial
+        Active:
+          ID: "?"
+          Data: true
+        ID: ID:StyledDVPBSMetallicMaterial:0
+        Persistent-ID: "?"
+        Position:
+          ID: "?"
+          Data:
+            - 0
+            - 0
+            - 0
+        Rotation:
+          ID: "?"
+          Data:
+            - 0
+            - 0
+            - 0
+            - 111111
+        Scale:
+          ID: "?"
+          Data:
+            - 111111
+            - 111111
+            - 111111
+        Tag:
+          ID: "?"
+          Data: null
+        OrderOffset:
+          ID: "?"
+          Data: 0
+        Components:
+          ID: "?"
+          Data:
+            - Type: 2
+              Data:
+                ID: "?"
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                VariableName:
+                  ID: ID:StyledDVPBSMetallicMaterial:Components:2:VariableName:0
+                  Data: Name
+                Reference:
+                  ID: "?"
+                  Data: ID:StyledDVPBSMetallicMaterial:Components:3:0
+                OverrideOnLink:
+                  ID: "?"
+                  Data: false
+            - Type: 3
+              Data:
+                ID: ID:StyledDVPBSMetallicMaterial:Components:3:0
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                HighPriorityIntegration:
+                  ID: "?"
+                  Data: false
+                TextureScale:
+                  ID: "?"
+                  Data:
+                    - 333.3333333333333
+                    - 333.3333333333333
+                TextureOffset:
+                  ID: "?"
+                  Data:
+                    - 0
+                    - 0
+                DetailTextureScale:
+                  ID: "?"
+                  Data:
+                    - 333.3333333333333
+                    - 333.3333333333333
+                DetailTextureOffset:
+                  ID: "?"
+                  Data:
+                    - 0
+                    - 0
+                AlbedoColor:
+                  ID: ID:StyledDVPBSMetallicMaterial:Components:3:AlbedoColor:0
+                  Data:
+                    - 333.3333333333333
+                    - 333.3333333333333
+                    - 333.3333333333333
+                    - 333.3333333333333
+                    - sRGB
+                AlbedoTexture:
+                  ID: "?"
+                  Data: null
+                EmissiveColor:
+                  ID: "?"
+                  Data:
+                    - 0
+                    - 0
+                    - 0
+                    - 333.3333333333333
+                    - sRGB
+                EmissiveMap:
+                  ID: "?"
+                  Data: null
+                NormalScale:
+                  ID: "?"
+                  Data: 333.3333333333333
+                NormalMap:
+                  ID: "?"
+                  Data: null
+                HeightMap:
+                  ID: "?"
+                  Data: null
+                HeightScale:
+                  ID: "?"
+                  Data: 6.666666666666667
+                OcclusionMap:
+                  ID: "?"
+                  Data: null
+                DetailAlbedoTexture:
+                  ID: "?"
+                  Data: null
+                DetailNormalMap:
+                  ID: "?"
+                  Data: null
+                DetailNormalScale:
+                  ID: "?"
+                  Data: 333.3333333333333
+                BlendMode:
+                  ID: "?"
+                  Data: Opaque
+                AlphaCutoff:
+                  ID: "?"
+                  Data: 166.66666666666666
+                OffsetFactor:
+                  ID: "?"
+                  Data: 0
+                OffsetUnits:
+                  ID: "?"
+                  Data: 0
+                RenderQueue:
+                  ID: "?"
+                  Data: -333.3333333333333
+                Metallic:
+                  ID: ID:StyledDVPBSMetallicMaterial:Components:3:Metallic:0
+                  Data: 0
+                Smoothness:
+                  ID: ID:StyledDVPBSMetallicMaterial:Components:3:Smoothness:0
+                  Data: 83.33333333333333
+                MetallicMap:
+                  ID: "?"
+                  Data: null
+                _shader-ID: "?"
+        Children: []
+        ParentReference: ""
+      - Name:
+          ID: "?"
+          Data: DV/Static
+        Active:
+          ID: "?"
+          Data: true
+        ID: "?"
+        Persistent-ID: "?"
+        Position:
+          ID: "?"
+          Data:
+            - 0
+            - 0
+            - 0
+        Rotation:
+          ID: "?"
+          Data:
+            - 0
+            - 0
+            - 0
+            - 111111
+        Scale:
+          ID: "?"
+          Data:
+            - 111111
+            - 111111
+            - 111111
+        Tag:
+          ID: "?"
+          Data: null
+        OrderOffset:
+          ID: "?"
+          Data: 0
+        Components:
+          ID: "?"
+          Data:
+            - Type: 1
+              Data:
+                ID: "?"
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                VariableName:
+                  ID: "?"
+                  Data: Static.Root
+                Reference:
+                  ID: "?"
+                  Data: ID:Ref:0
+                OverrideOnLink:
+                  ID: "?"
+                  Data: false
+            - Type: 1
+              Data:
+                ID: "?"
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                VariableName:
+                  ID: "?"
+                  Data: Static.Main
+                Reference:
+                  ID: "?"
+                  Data: ID:StyledDVPBSMetallicMaterial:0
+                OverrideOnLink:
+                  ID: "?"
+                  Data: false
+            - Type: 1
+              Data:
+                ID: "?"
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                VariableName:
+                  ID: "?"
+                  Data: Static.ChildrenParent
+                Reference:
+                  ID: "?"
+                  Data: ID:StyledDVPBSMetallicMaterial:0
+                OverrideOnLink:
+                  ID: "?"
+                  Data: false
+        Children: []
+        ParentReference: ""
+      - Name:
+          ID: "?"
+          Data: DV/Props
+        Active:
+          ID: "?"
+          Data: true
+        ID: "?"
+        Persistent-ID: "?"
+        Position:
+          ID: "?"
+          Data:
+            - 0
+            - 0
+            - 0
+        Rotation:
+          ID: "?"
+          Data:
+            - 0
+            - 0
+            - 0
+            - 111111
+        Scale:
+          ID: "?"
+          Data:
+            - 111111
+            - 111111
+            - 111111
+        Tag:
+          ID: "?"
+          Data: null
+        OrderOffset:
+          ID: "?"
+          Data: 0
+        Components:
+          ID: "?"
+          Data:
+            - Type: 4
+              Data:
+                ID: "?"
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                VariableName:
+                  ID: "?"
+                  Data: Props.name
+                TargetField:
+                  ID: "?"
+                  Data: ID:StyledDVPBSMetallicMaterial:Components:2:VariableName:0
+                OverrideOnLink:
+                  ID: "?"
+                  Data: false
+            - Type: 5
+              Data:
+                ID: "?"
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                VariableName:
+                  ID: "?"
+                  Data: Props.albedoColor
+                TargetField:
+                  ID: "?"
+                  Data: ID:StyledDVPBSMetallicMaterial:Components:3:AlbedoColor:0
+                OverrideOnLink:
+                  ID: "?"
+                  Data: false
+            - Type: 6
+              Data:
+                ID: "?"
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                VariableName:
+                  ID: "?"
+                  Data: Props.metallic
+                TargetField:
+                  ID: "?"
+                  Data: ID:StyledDVPBSMetallicMaterial:Components:3:Metallic:0
+                OverrideOnLink:
+                  ID: "?"
+                  Data: false
+            - Type: 6
+              Data:
+                ID: "?"
+                persistent-ID: "?"
+                UpdateOrder:
+                  ID: "?"
+                  Data: 0
+                Enabled:
+                  ID: "?"
+                  Data: true
+                VariableName:
+                  ID: "?"
+                  Data: Props.smoothness
+                TargetField:
+                  ID: "?"
+                  Data: ID:StyledDVPBSMetallicMaterial:Components:3:Smoothness:0
+                OverrideOnLink:
+                  ID: "?"
+                  Data: false
+        Children: []
+        ParentReference: ""
+    ParentReference: ""
+ParentReference: ""

@@ -5,6 +5,7 @@ import {
   StyledDVColor,
   StyledDVCylinderMesh,
   StyledDVFont,
+  StyledDVPBSMetallicMaterial,
   StyledDVSpace,
   StyledDVSprite,
   StyledDVUiTextUnlitMaterial,
@@ -45,9 +46,19 @@ type StyledUiTextUnlitMaterialConfig = {
   zWrite?: "Auto" | "On" | "Off";
 };
 
-type StyledMaterial =
+type StyledPBSMetallicMaterialConfig = {
+  type: "PBSMetallicMaterial";
+  albedoColor?:
+    | [number, number, number, number]
+    | [number, number, number, number, "sRGB" | "sRGBAlpha" | "Linear"];
+  metallic?: number;
+  smoothness?: number;
+};
+
+type StyledMaterialConfig =
   | StyledUiUnlitMaterialConfig
-  | StyledUiTextUnlitMaterialConfig;
+  | StyledUiTextUnlitMaterialConfig
+  | StyledPBSMetallicMaterialConfig;
 
 type StyledFontConfig = {
   type: "Font";
@@ -153,6 +164,23 @@ export const createUiTextUnlitMaterial = ({
   zWrite,
 });
 
+export const createPBSMetallicMaterial = ({
+  albedoColor,
+  metallic,
+  smoothness,
+}: {
+  albedoColor?:
+    | [number, number, number, number]
+    | [number, number, number, number, "sRGB" | "sRGBAlpha" | "Linear"];
+  metallic?: number;
+  smoothness?: number;
+}): StyledPBSMetallicMaterialConfig => ({
+  type: "PBSMetallicMaterial",
+  albedoColor,
+  metallic,
+  smoothness,
+});
+
 export const createFont = ({
   urls,
 }: Omit<StyledFontConfig, "type">): StyledFontConfig => ({
@@ -193,7 +221,7 @@ export type StyledSpriteVariable = {
 };
 
 export type StyledMaterialVariable = {
-  type: "UiUnlitMaterial" | "UiTextUnlitMaterial";
+  type: StyledMaterialConfig["type"];
   variableName: string;
 };
 
@@ -203,7 +231,7 @@ export type StyledFontVariable = {
 };
 
 export type StyledMeshVariable = {
-  type: "BoxMesh" | "CylinderMesh";
+  type: StyledMeshConfig["type"];
   variableName: string;
 };
 
@@ -217,7 +245,7 @@ export type StyledVariable =
 export const createStyle = <
   C extends { [key: string]: StyledColorConfig },
   S extends { [key: string]: StyledSpriteConfig },
-  M extends { [key: string]: StyledMaterial },
+  M extends { [key: string]: StyledMaterialConfig },
   F extends { [key: string]: StyledFontConfig },
   Mh extends { [key: string]: StyledMeshConfig },
 >(config: {
@@ -269,7 +297,7 @@ export const createStyle = <
   );
 
   const materialVariables = Object.keys(config.Material ?? []).map(
-    (key): { key: keyof M; variableName: string } & StyledMaterial => ({
+    (key): { key: keyof M; variableName: string } & StyledMaterialConfig => ({
       ...(config.Material?.[key] ?? {
         type: "UiUnlitMaterial",
         offsetFactor: 0,
@@ -350,6 +378,16 @@ export const createStyle = <
                   offsetFactor={variable.offsetFactor}
                   offsetUnits={variable.offsetUnits}
                   zWrite={variable.zWrite}
+                />
+              );
+            case "PBSMetallicMaterial":
+              return (
+                <StyledDVPBSMetallicMaterial
+                  albedoColor={variable.albedoColor}
+                  key={variable.variableName}
+                  metallic={variable.metallic}
+                  name={variable.variableName}
+                  smoothness={variable.smoothness}
                 />
               );
           }
