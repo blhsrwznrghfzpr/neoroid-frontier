@@ -38,10 +38,10 @@ export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
           const player = gameState.players.find((p) => p.id === playerId);
           if (player) {
             player.currentCell = hex;
-            console.log(player);
-            gameState.workers.forEach((worker) => {
+            //console.log(player);
+            player.workers.forEach((worker) => {
                 worker.status.currentCell = hex;
-                console.log(worker);
+                //console.log(worker);
             });
           }
         } else {

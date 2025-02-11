@@ -10,7 +10,7 @@ export const WorkerRender = ({
   return (
     <>
       {workerStatus.type === "following" ? (
-      <FollowingUser userId={workerStatus.targetUserId}>
+      <FollowingUser smoothSpeed={1 + Math.random()} userId={workerStatus.targetUserId}>
         <Box name={[0.5, 0.5, 0.5]} /> 
       </FollowingUser>
       ) : (

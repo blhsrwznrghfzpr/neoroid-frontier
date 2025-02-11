@@ -67,7 +67,7 @@ export class Game {
     this.state.workers.forEach((worker) => {
       worker.follow(targetUserId);
     });
-    console.log("All Workeroid follow:", targetUserId);
+    //console.log("All Workeroid follow:", targetUserId);
   }
 
   moveWorker(workerId: number, dst: HexCoordinates) {
