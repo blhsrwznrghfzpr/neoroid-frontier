@@ -13,7 +13,9 @@ const detail = {
   propsConfig: {
     userId: UnitProp.String(""),
     updateInterval: UnitProp.Float(10),
-    onChange: UnitProp.Function((_env: FunctionEnv, _text: string) => {}),
+    onUpdate: UnitProp.Function(
+      (_env: FunctionEnv, _position: [number, number, number]) => {},
+    ),
   },
   children: "multi",
 } as const satisfies DetailBase;
