@@ -72,8 +72,12 @@ export class Game {
     if (this.state.mode !== "inGame") {
       return;
     }
+    const player = this.state.players.find((p) => p.id === targetUserId);
     this.state.workers.forEach((worker) => {
       worker.follow(targetUserId);
+      if (player) {
+        player.workers.push(worker);
+      }
     });
     //console.log("All Workeroid follow:", targetUserId);
   }
