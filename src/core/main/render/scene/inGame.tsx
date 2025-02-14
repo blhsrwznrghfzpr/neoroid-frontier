@@ -1,13 +1,17 @@
 import { useCallback } from "react";
 import { Slot } from "../../../unit/package/Primitive/main";
+import { Game } from "../../game";
 import { GameStateInGame } from "../../game/type";
 import { WorkerRender } from "../worker";
 import { Cell } from "../../game/map/cell";
 import { CellRender } from "./cell";
 import { GetUserPosition } from "../../../unit/package/GameEvent/main";
 import { FunctionEnv } from "../../../../lib/miragex/common/interactionEvent";
+import { SystemUI } from "./systemUI";
+import { hexToPoint } from "honeycomb-grid";
 
-export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
+export const InGameScene = ({ game }: { game: Game }) => {
+  const gameState = game.state as GameStateInGame;
   const posTextOnChange = useCallback(
     (env: FunctionEnv, position: [number, number, number]) =>
       updateUserCell(position, env.userId),
@@ -53,7 +57,10 @@ export const InGameScene = ({ gameState }: { gameState: GameStateInGame }) => {
       {/* map */}
       <Slot>
         {gameState.map.getHexArray().map((cell: Cell, index: number) => (
-          <CellRender cell={cell} key={index} />
+          <CellRender cell={cell} key={index}/>
+        ))}
+        {gameState.players.map((player, index) => (
+          <SystemUI game={game} key={index} player={player} positionXY={hexToPoint(player.currentCell)}/>
         ))}
       </Slot>
       {/* workers */}

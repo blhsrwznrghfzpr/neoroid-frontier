@@ -1,13 +1,14 @@
-import { GameState } from "../../game/type";
+//import { GameState } from "../../game/type";
+import { Game } from "../../game";
 import { InGameScene } from "./inGame";
 import { LobbyScene } from "./lobby";
 
-export const SceneRender = ({ gameState }: { gameState: GameState }) => {
-  switch (gameState.mode) {
+export const SceneRender = ({ game }: { game: Game }) => {
+  switch (game.state.mode) {
     case "lobby":
-      return <LobbyScene gameState={gameState} />;
+      return <LobbyScene game={game} />;
     case "inGame":
-      return <InGameScene gameState={gameState} />;
+      return <InGameScene game={game} />;
   }
   return <></>;
 };

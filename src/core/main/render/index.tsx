@@ -80,7 +80,7 @@ export const Main = () => {
           </VerticalLayout>
         </Canvas>
       </Slot>
-      <SceneRender gameState={gameRef.current.state} />
+      <SceneRender game={gameRef.current} />
     </StyledSpace>
   );
 };

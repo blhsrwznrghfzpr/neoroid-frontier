@@ -93,7 +93,11 @@ export class Game {
     if (!worker || !dstCell) {
       return;
     }
-
+    
+    this.state.players.forEach((player) => {
+      player.workers = player.workers.filter((w) => w !== worker);
+    });
+  
     const currentCell = worker.status.currentCell;
     const traverser = this.state.map.grid.traverse(
       line({ start: currentCell, stop: dstCell }),
