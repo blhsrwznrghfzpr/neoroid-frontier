@@ -20,6 +20,10 @@ export const SystemUI = ( { game,player,positionXY }: { game :Game,player: Playe
         game.moveWorker(workerId, [dst.x, dst.y]);
     }, []);
 
+    const handleWorkInCell = useCallback((workerId: number, dst: Point) => {
+        game.workInCell(workerId, [dst.x, dst.y]);
+    }, []);
+
     return (
       <Slot position={position}> 
         <Canvas size={[1800, 1000]}>
@@ -36,10 +40,10 @@ export const SystemUI = ( { game,player,positionXY }: { game :Game,player: Playe
                     {workers.map((worker, workerIndex) => (
                     <HorizontalLayout forceExpandChildWidth key={workerIndex}>
                         <StyledText                          
-                            content={`Worker [${workerIndex.toString()}] -> type:${worker.status.type} / Cell:${worker.status.currentCell.q}, ${worker.status.currentCell.r}`}
+                            content={`Worker [${workerIndex.toString()}] -> type:${worker.status.type}`}
                             key={workerIndex}
                         />
-                        <StyledButton defaultColor={[0.5,0.5,0.5,1]} onClick={() => handleMoveWorker(workerIndex, { x: worker.status.currentCell.q+1, y: worker.status.currentCell.r+1 })}>
+                        <StyledButton defaultColor={[0.5,0.5,0.5,1]} onClick={() => handleWorkInCell(workerIndex, { x: worker.status.currentCell.q+1, y: worker.status.currentCell.r+1 })}>
                             <StyledText content="work" defaultColor={[1,1,1,1]} verticalAutoSize />
                         </StyledButton>
                         <StyledButton defaultColor={[0.5,0.5,0.5,1]} onClick={() => handleMoveWorker(workerIndex, { x: 0, y: 0 })}>

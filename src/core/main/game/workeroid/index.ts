@@ -8,31 +8,34 @@ export class Workeroid {
     this.status = { type: "idle", currentCell: currentCell };
   }
 
-  move(traverser: Cell[]) {
+  async move(traverser: Cell[]): Promise<void> {
     this.status = {
       type: "moving",
       currentCell: this.status.currentCell,
       traverser,
     };
 
-    const timer = setInterval(() => {
-      console.log("Workeroid move timer", this.status.currentCell.tuple);
-      if (this.status.type !== "moving" || this.status.traverser.length === 0) {
-        this.status = {
-          type: "idle",
-          currentCell: this.status.currentCell,
-        };
-        clearInterval(timer);
-        return;
-      }
+    return new Promise((resolve) => {
+      const timer = setInterval(() => {
+        console.log("Workeroid move timer", this.status.currentCell.tuple);
+        if (this.status.type !== "moving" || this.status.traverser.length === 0) {
+          this.status = {
+            type: "idle",
+            currentCell: this.status.currentCell,
+          };
+          clearInterval(timer);
+          resolve();
+          return;
+        }
 
-      const nextCell = this.status.traverser.shift();
-      if (!nextCell) {
-        return;
-      }
+        const nextCell = this.status.traverser.shift();
+        if (!nextCell) {
+          return;
+        }
 
-      this.status.currentCell = nextCell;
-    }, 1000);
+        this.status.currentCell = nextCell;
+      }, 1000);
+    });
   }
 
   follow(targetUserId: string) {
@@ -42,4 +45,30 @@ export class Workeroid {
       targetUserId,
     };
   }
+
+  async collect(taskMax: number): Promise<void> {
+    this.status = {
+      type: "collecting",
+      currentCell: this.status.currentCell,
+    };
+    console.log("Workeroid collect in", this.status.currentCell.tuple);
+    let count = 0;
+
+    return new Promise((resolve) => {
+      const timer = setInterval(() => {
+        if (this.status.type !== "collecting" || count >= taskMax) {
+          this.status = {
+            type: "idle",
+            currentCell: this.status.currentCell,
+          };
+          clearInterval(timer);
+          resolve();
+          return;
+        }
+        console.log("progress:", count, "/", taskMax);
+        count++;
+      }, 1000);
+    });
+  }
 }
+

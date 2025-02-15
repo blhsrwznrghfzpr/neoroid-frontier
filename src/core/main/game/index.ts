@@ -82,7 +82,22 @@ export class Game {
     //console.log("All Workeroid follow:", targetUserId);
   }
 
-  moveWorker(workerId: number, dst: HexCoordinates) {
+  async workInCell(workerId: number, dst: HexCoordinates) {
+    if (this.state.mode !== "inGame") {
+      return;
+    }
+    const moveResult = await this.moveWorker(workerId, dst);
+    console.log("Wmove result:", moveResult);
+    
+    const worker = this.state.workers[workerId];
+    if (!worker) {
+      return;
+    }
+
+    worker.collect(10);
+  }
+
+  async moveWorker(workerId: number, dst: HexCoordinates): Promise<void> {
     if (this.state.mode !== "inGame") {
       return;
     }
@@ -103,7 +118,7 @@ export class Game {
       line({ start: currentCell, stop: dstCell }),
     );
 
-    worker.move(traverser.toArray());
+    await worker.move(traverser.toArray());
   }
 
   followWorker(workerId: number, targetUserId: string) {
