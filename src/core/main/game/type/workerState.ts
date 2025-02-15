@@ -13,13 +13,13 @@ type WorkerMoving = {
   traverser: Cell[];
 };
 
-interface WorkerFollowing {
+type WorkerFollowing = {
   type: "following";
   currentCell: Cell;
   targetUserId: string;
 }
 
-interface WorkerCollecting {
+type WorkerCollecting = {
   type: "collecting";
   currentCell: Cell;
 }

@@ -51,6 +51,7 @@ export const InGameScene = ({ game }: { game: Game }) => {
         <GetUserPosition
           key={index}
           onUpdate={(env, text) => posTextOnChange(env, text)}
+          updateInterval={1}
           userId={player.id}
         />
       ))}

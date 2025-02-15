@@ -14,7 +14,7 @@ export const WorkerRender = ({
         <Box name={[0.5, 0.5, 0.5]} /> 
       </FollowingUser>
       ) : (
-      <Slot position={workerStatus.currentCell.point}>
+      <Slot name={workerStatus.type} position={workerStatus.currentCell.point}>
         <Slot position={[0, 1, 0]}>
           <Box name={[0.5, 0.5, 0.5]} />
         </Slot>

@@ -68,18 +68,27 @@ export class Game {
     };
   }
 
+  getAllWorkers() {
+    if (this.state.mode !== "inGame") {
+      return [];
+    }
+    return this.state.workers;
+  }
+
   followerAllWorkers(targetUserId: string) {
     if (this.state.mode !== "inGame") {
       return;
     }
     const player = this.state.players.find((p) => p.id === targetUserId);
+    if (!player) {
+      return;
+    }
     this.state.workers.forEach((worker) => {
-      worker.follow(targetUserId);
-      if (player) {
+      if (worker.status.type === "idle") {
+        worker.follow(targetUserId);
         player.workers.push(worker);
       }
     });
-    //console.log("All Workeroid follow:", targetUserId);
   }
 
   async workInCell(workerId: number, dst: HexCoordinates) {
@@ -108,11 +117,13 @@ export class Game {
     if (!worker || !dstCell) {
       return;
     }
-    
-    this.state.players.forEach((player) => {
+    const player = this.state.players.find((player) =>
+      player.workers.some((worker) => worker === worker)
+    );
+    if (player) {
       player.workers = player.workers.filter((w) => w !== worker);
-    });
-  
+    }
+    
     const currentCell = worker.status.currentCell;
     const traverser = this.state.map.grid.traverse(
       line({ start: currentCell, stop: dstCell }),

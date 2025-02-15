@@ -12,7 +12,7 @@ const detail = {
   code: "GameEvent/GetUserPosition",
   propsConfig: {
     userId: UnitProp.String(""),
-    updateInterval: UnitProp.Float(10),
+    updateInterval: UnitProp.Float(5),
     onUpdate: UnitProp.Function(
       (_env: FunctionEnv, _position: [number, number, number]) => {},
     ),

@@ -12,9 +12,10 @@ export const SystemUI = ( { game,player,positionXY }: { game :Game,player: Playe
     useEffect(() => {
       setWorkers(player.workers);
     }, [player.workers]);
-
+    
     const position:[number,number,number]= [positionXY.x, 1, positionXY.y+0.3];
 
+    const allWorkers = game.getAllWorkers();
 
     const handleMoveWorker = useCallback((workerId: number, dst: Point) => {
         game.moveWorker(workerId, [dst.x, dst.y]);
@@ -37,19 +38,21 @@ export const SystemUI = ( { game,player,positionXY }: { game :Game,player: Playe
                     paddingTop={10}
                     >
                     <StyledText content={player.id}/>
-                    {workers.map((worker, workerIndex) => (
-                    <HorizontalLayout forceExpandChildWidth key={workerIndex}>
-                        <StyledText                          
-                            content={`Worker [${workerIndex.toString()}] -> type:${worker.status.type}`}
-                            key={workerIndex}
-                        />
-                        <StyledButton defaultColor={[0.5,0.5,0.5,1]} onClick={() => handleWorkInCell(workerIndex, { x: worker.status.currentCell.q+1, y: worker.status.currentCell.r+1 })}>
-                            <StyledText content="work" defaultColor={[1,1,1,1]} verticalAutoSize />
-                        </StyledButton>
-                        <StyledButton defaultColor={[0.5,0.5,0.5,1]} onClick={() => handleMoveWorker(workerIndex, { x: 0, y: 0 })}>
-                            <StyledText content="go home" defaultColor={[1,1,1,1]} verticalAutoSize />
-                        </StyledButton>
-                    </HorizontalLayout>
+                    {allWorkers.map((worker, workerIndex) => (
+                        workers.includes(worker) && (
+                        <HorizontalLayout forceExpandChildWidth key={workerIndex}>
+                            <StyledText                          
+                                content={`Worker [${workerIndex.toString()}] -> type:${worker.status.type}`}
+                                key={workerIndex}
+                            />
+                            <StyledButton defaultColor={[0.5,0.5,0.5,1]} onClick={() => handleWorkInCell(workerIndex, { x: worker.status.currentCell.q+1, y: worker.status.currentCell.r+1 })}>
+                                <StyledText content="work" defaultColor={[1,1,1,1]} verticalAutoSize />
+                            </StyledButton>
+                            <StyledButton defaultColor={[0.5,0.5,0.5,1]} onClick={() => handleMoveWorker(workerIndex, { x: 0, y: 0 })}>
+                                <StyledText content="go home" defaultColor={[1,1,1,1]} verticalAutoSize />
+                            </StyledButton>
+                        </HorizontalLayout>
+                        )
                     ))}
                     </VerticalLayout>
                 </StyledScrollArea>
